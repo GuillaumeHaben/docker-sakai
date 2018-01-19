@@ -1,0 +1,22 @@
+version: "3"
+services:
+  tomcat:
+    image: docker-tomcat-sakai
+    build: ./tomcat-sakai
+    container_name: docker-tomcat-sakai
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+  mysql:
+    image: mysql:5.6
+    container_name: sakai_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqlroot
+      - MYSQL_USER=sakaiuser
+      - MYSQL_PASSWORD=sakaipassword
+      - MYSQL_DATABASE=sakai
+    volumes:
+      - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
